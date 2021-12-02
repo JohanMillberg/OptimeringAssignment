@@ -56,5 +56,4 @@ while abs((norm(Weights) - norm(prev_weights))/norm(Weights)) > 0.001
     prev_weights = Weights;
     Weights = Weights + p_vec(1:5,1);
     lambda = lambda + p_vec(6,1);
-    disp(Weights)
 end
