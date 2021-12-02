@@ -19,8 +19,8 @@ Weights = [1/5 1/5 1/5 1/5 1/5]';
 
 Variance = Weights'*CoV*Weights;
 k = 0;
-while abs(sum(Weights - prev_weights))/abs(sum(Weights)) > 0.001
-    k = i + 1;
+while abs((norm(Weights) - norm(prev_weights))/norm(Weights)) > 0.001
+    k = k + 1;
     grad_f = zeros(5,1);
     for i = 1:5
         sum_ = 0;
@@ -56,4 +56,5 @@ while abs(sum(Weights - prev_weights))/abs(sum(Weights)) > 0.001
     prev_weights = Weights;
     Weights = Weights + p_vec(1:5,1);
     lambda = lambda + p_vec(6,1);
+    disp(Weights)
 end
