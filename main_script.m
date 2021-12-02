@@ -71,12 +71,9 @@ f = zeros(5,1);
 
 w = quadprog(2.*CoV,[],[],[],Aeq,beq,lb,ub);
 %%% Short selling allowed
-r = 1e-2.*[13.0, 4.4, 12.1, 7.1, 11.7];
-rho = 0.2;
+
 Aeq = [ones(1,5)];
 beq = [1];
-lb = zeros(5,1);
-ub = ones(5,1);
 
 alphas = 0.05:0.05:1;
 sigmas = zeros(1,length(alphas));
@@ -101,10 +98,6 @@ hold off
 
 
 %%% Short selling not allowed
-r = 1e-2.*[13.0, 4.4, 12.1, 7.1, 11.7];
-rho = 0.2;
-Aeq = [ones(1,5)];
-beq = [1];
 lb = zeros(5,1);
 ub = ones(5,1);
 
