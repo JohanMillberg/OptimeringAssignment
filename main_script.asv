@@ -70,7 +70,7 @@ ub = ones(5,1);
 f = zeros(5,1);
 
 w = quadprog(2.*CoV,[],[],[],Aeq,beq,lb,ub);
-%%% Short selling allowed
+%%%
 r = 1e-2.*[13.0, 4.4, 12.1, 7.1, 11.7];
 rho = 0.2;
 Aeq = [ones(1,5)];
@@ -78,53 +78,11 @@ beq = [1];
 lb = zeros(5,1);
 ub = ones(5,1);
 
-alphas = 0.05:0.05:1;
-sigmas = zeros(1,length(alphas));
-r_bars = zeros(1,length(alphas));
-w_s = zeros(5,length(alphas));
+alpha = 0.05:0.05:1;
 
-for i = 1:length(alphas)
-    H = alphas(i).*(2.*CoV);
-    f = (alphas(i) - 1).*r;
+for i = alpha
+    H = alpha.*(2.*CoV);
+    f = (alpha - 1).*r;
     w = quadprog(H,f,[],[],Aeq,beq,[],[]);
-    w_s(:,i) = w;
-    sigmas(i) = w'*CoV*w;
-    r_bars(i) = r*w;
-end
-figure(1)
-hold on
-plot(sigmas,r_bars)
-xlabel('Variance')
-ylabel('Estimated rate of return')
-title('Short selling allowed')
-hold off
-
-
-%%% Short selling not allowed
-r = 1e-2.*[13.0, 4.4, 12.1, 7.1, 11.7];
-rho = 0.2;
-Aeq = [ones(1,5)];
-beq = [1];
-lb = zeros(5,1);
-ub = ones(5,1);
-
-alphas = 0.05:0.05:1;
-sigmas = zeros(1,length(alphas));
-r_bars = zeros(1,length(alphas));
-w_s = zeros(5,length(alphas));
-
-for i = 1:length(alphas)
-    H = alphas(i).*(2.*CoV);
-    f = (alphas(i) - 1).*r;
-    w = quadprog(H,f,[],[],Aeq,beq,lb,ub);
-    w_s(:,i) = w;
-    sigmas(i) = w'*CoV*w;
-    r_bars(i) = r*w;
-end
-figure(2)
-hold on
-plot(sigmas,r_bars)
-xlabel('Variance')
-ylabel('Estimated rate of return')
-title('Short selling not allowed')
-hold off
+    sigma = w'*CoV*w
+    r_bar = r*w
